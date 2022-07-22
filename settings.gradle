@@ -1,0 +1,6 @@
+rootProject.name = 'taller2'
+
+include 'user-service'
+include 'movie-service'
+include 'showtime-service'
+include 'booking-service'
