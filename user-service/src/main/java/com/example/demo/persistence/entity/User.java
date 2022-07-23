@@ -19,11 +19,9 @@ public class User {
     private long Id;
 
     @Column(name = "name")
-    @NotBlank
     private String Name;
 
     @Column(name = "lastname")
-    @NotBlank
     private String lastName;
 
     @Override

@@ -12,6 +12,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
 }
@@ -43,7 +44,7 @@ subprojects {
         // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
         implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.2'
 
-
+        implementation ("co.com.responselibrary:co.com.responselibrary:0.0.2")
     }
 
     test {
