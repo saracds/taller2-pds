@@ -3,10 +3,10 @@ package com.example.demo.controller;
 import co.com.responselibrary.library_response.FormatMessage;
 import co.com.responselibrary.library_response.Response;
 import co.com.responselibrary.library_response.ResponseBuild;
-import com.example.demo.persistence.entity.User;
 import com.example.demo.service.UserService;
 import com.example.demo.service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@ComponentScan("co.com.responselibrary.*")
 public class UserController {
 
     private final UserService service;
