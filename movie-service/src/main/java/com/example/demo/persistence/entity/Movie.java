@@ -4,32 +4,34 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "movie")
+public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true)
     private long Id;
 
-    @Column(name = "name")
-    private String Name;
+    @Column(name = "title")
+    private String Title;
 
-    @Column(name = "lastname")
-    private String lastName;
+    @Column(name ="director")
+    private String Director;
+
+    @Column(name = "rating")
+    private int Rating;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Id == user.Id;
+        Movie movie = (Movie) o;
+        return Id == movie.Id;
     }
 
     @Override
