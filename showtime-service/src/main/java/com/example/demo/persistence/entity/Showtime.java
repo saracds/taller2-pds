@@ -1,35 +1,37 @@
 package com.example.demo.persistence.entity;
 
+import com.example.demo.model.Movie;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "showtime")
+public class Showtime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_user", unique = true, nullable = false)
+    @Column(name = "id_showtime", unique = true, nullable = false)
     private long Id;
 
-    @Column(name = "name")
-    private String Name;
+    @Column(name = "date")
+    private LocalDateTime Date;
 
-    @Column(name = "lastname")
-    private String lastName;
+    @Transient
+    private List<Movie> Movies;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Id == user.Id;
+        Showtime showtime = (Showtime) o;
+        return Id == showtime.Id;
     }
 
     @Override
