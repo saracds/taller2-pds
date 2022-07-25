@@ -1,6 +1,7 @@
 package com.example.demo.persistence.entity;
 
 import com.example.demo.model.Movie;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +24,13 @@ public class Showtime {
     @Column(name = "date")
     private LocalDateTime Date;
 
-    @Transient
-    private List<Movie> Movies;
+    @JsonManagedReference
+    @OneToMany(
+            mappedBy = "showtime",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
+            orphanRemoval = true)
+    private List<Showtime_Movie> movies;
 
     @Override
     public boolean equals(Object o) {
