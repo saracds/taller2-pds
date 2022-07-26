@@ -1,11 +1,13 @@
 package com.example.demo.persistence.entity;
 
 import com.example.demo.model.Movie;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -24,12 +26,10 @@ public class Showtime {
     @Column(name = "date")
     private LocalDateTime Date;
 
-    @JsonManagedReference
-    @OneToMany(
-            mappedBy = "showtime",
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
-            orphanRemoval = true)
+    @Valid
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_showtime")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Showtime_Movie> movies;
 
     @Override

@@ -42,7 +42,7 @@ public class BookingController {
 
         var booking = service.findById(Id);
 
-        if (!booking.isPresent()) {
+        if (booking.isEmpty()) {
             return build.notFound("No se encontro la reserva con el id " + Id);
         }
         return build.success(booking);
@@ -54,12 +54,12 @@ public class BookingController {
         return build.success();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/userid/{userId}")
     public Response findByUserId(@PathVariable("userId") long userId) {
 
         var booking = service.findByUserId(userId);
 
-        if (!booking.isPresent()) {
+        if (booking.isEmpty()) {
             return build.notFound("No se encontro la reserva con el id de usuario" + userId);
         }
         return build.success(booking);

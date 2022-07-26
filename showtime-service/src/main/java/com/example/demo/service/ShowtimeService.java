@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ShowtimeService implements ShowtimeInf{
+public class ShowtimeService implements ShowtimeInf {
 
     private final ShowtimeRepository repository;
     private final ShowtimeMapper mapper;
@@ -30,7 +30,7 @@ public class ShowtimeService implements ShowtimeInf{
 
     @Override
     public void save(ShowtimeDto showtimeDto) {
-        System.out.println(showtimeDto.getMovies().size());
+
         Showtime showtime = mapper.map(showtimeDto);
         repository.save(showtime);
     }
@@ -40,16 +40,19 @@ public class ShowtimeService implements ShowtimeInf{
 
         Optional<Showtime> showtime = repository.findById(Id);
 
-        ModelMapper modelMapper = new ModelMapper();
+        if (showtime.isPresent()) {
+            ModelMapper modelMapper = new ModelMapper();
 
-        List<Showtime_Movie> items = (List<Showtime_Movie>) showtime.get().getMovies().stream()
-                .map(item -> {
-                    Movie movie = modelMapper.map(client.findById(item.getId_Movie()).getData(),Movie.class);
-                    item.setMovie(movie);
-                    return item;
-                }).collect(Collectors.toList());
-        showtime.get().setMovies(items);
-
-        return showtime;
+            List<Showtime_Movie> items = (List<Showtime_Movie>) showtime.get().getMovies().stream()
+                    .map(item -> {
+                        Movie movie = modelMapper.map(client.findById(item.getId_Movie()).getData(), Movie.class);
+                        item.setMovie(movie);
+                        return item;
+                    }).collect(Collectors.toList());
+            showtime.get().setMovies(items);
+            return showtime;
+        } else {
+            return Optional.empty();
+        }
     }
 }

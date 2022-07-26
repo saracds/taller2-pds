@@ -44,9 +44,11 @@ public class ShowtimeController {
 
         var showtime = service.findById(Id);
 
-        if (!showtime.isPresent()) {
+        if (showtime.isEmpty()) {
             return build.notFound("No se encontro la programacion con el id " + Id);
+        }else {
+            return build.success(showtime);
         }
-        return build.success(showtime);
+
     }
 }

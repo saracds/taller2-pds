@@ -41,7 +41,25 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public Response deleteById(@PathVariable("id") long Id) {
-        service.deleteById(Id);
-        return build.success();
+        var booking = service.findBookingByUserId(Id);
+        if(booking != null){
+            return build.failed("No se puede eliminar el usuario, tiene reservas asociadas");
+        }else{
+            service.deleteById(Id);
+            return build.success();
+        }
     }
+    @GetMapping("/{id}")
+    public Response findById(@PathVariable("id") long Id) {
+
+        var user = service.findById(Id);
+
+        if (!user.isPresent()) {
+            return build.notFound("No se encontro el usuario con el id " + Id);
+        }else {
+            return build.success(user);
+        }
+
+    }
+
 }

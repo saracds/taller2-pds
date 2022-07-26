@@ -3,10 +3,12 @@ package com.example.demo.persistence.entity;
 import com.example.demo.model.Movie;
 import com.example.demo.model.Showtime;
 import com.example.demo.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,8 +35,11 @@ public class Booking {
     @Transient
     private Showtime showtime;
 
-    @Transient
-    private List<Movie> movies;
+    @Valid
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_booking")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Booking_Movie> movies;
 
     @Override
     public boolean equals(Object o) {
