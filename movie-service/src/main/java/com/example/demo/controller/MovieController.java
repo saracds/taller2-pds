@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import co.com.responselibrary.library_response.FormatMessage;
 import co.com.responselibrary.library_response.Response;
 import co.com.responselibrary.library_response.ResponseBuild;
+import com.example.demo.persistence.entity.Movie;
 import com.example.demo.service.Dto.MovieDto;
 import com.example.demo.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/movies")
@@ -50,7 +52,20 @@ public class MovieController {
 
     @DeleteMapping("/{id}")
     public Response deleteById(@PathVariable("id") long Id) {
-        service.deleteById(Id);
-        return build.success();
+
+        Optional<Movie>movie = service.findById(Id);
+
+        if(movie.isPresent()){
+            var validation = service.ValidateMovie(Id);
+            if(validation){
+                service.deleteById(Id);
+                return build.success();
+            }else{
+                return build.failed("No se puede eliminar la pelicula, ya que tiene programaciones o reservas asociadas");
+            }
+        }else{
+            return build.notFound("No se encontro la pelicula con el id " + Id);
+        }
+
     }
 }

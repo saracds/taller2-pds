@@ -12,5 +12,6 @@ public class BookingClientImplHystrixFallBack implements BookingClient {
 
     private final ResponseBuild build;
 
-
+    @Override
+    public Response findByMovieId(Long userId) { return build.notFound(false);}
 }

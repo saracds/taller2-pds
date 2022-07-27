@@ -16,4 +16,6 @@ public interface MovieInf {
 
     Optional<Movie> findById(long Id);
 
+    boolean ValidateMovie (long Id);
+
 }

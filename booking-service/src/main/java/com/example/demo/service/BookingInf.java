@@ -17,4 +17,6 @@ public interface BookingInf {
     void deleteById (long Id);
 
     Optional<Booking> findByUserId (long userId);
+    boolean findByMovieId (long Id);
+
 }

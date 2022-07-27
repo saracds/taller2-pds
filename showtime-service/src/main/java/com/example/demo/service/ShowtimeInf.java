@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.persistence.entity.Showtime;
+import com.example.demo.persistence.entity.Showtime_Movie;
 import com.example.demo.service.dto.ShowtimeDto;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface ShowtimeInf {
     void save (ShowtimeDto showtimeDto);
 
     Optional<Showtime> findById(long Id);
+
+    boolean findByMovieId (long Id);
 }

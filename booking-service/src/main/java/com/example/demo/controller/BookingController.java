@@ -64,4 +64,17 @@ public class BookingController {
         }
         return build.success(booking);
     }
+
+    @GetMapping("/movie/{movieId}")
+    public Response findByMovieId(@PathVariable("movieId") long Id) {
+
+        var booking_movie = service.findByMovieId(Id);
+
+        if (!booking_movie) {
+            return build.notFound(false);
+        }else {
+            return build.success(true);
+        }
+    }
+
 }

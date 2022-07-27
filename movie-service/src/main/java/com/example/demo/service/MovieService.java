@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.clientFeign.BookingClient;
+import com.example.demo.clientFeign.ShowtimeClient;
 import com.example.demo.mapper.MovieMapper;
 import com.example.demo.persistence.entity.Movie;
 import com.example.demo.persistence.repository.MovieRepository;
@@ -16,6 +18,8 @@ public class MovieService implements MovieInf {
 
     private final MovieRepository repository;
     private final MovieMapper mapper;
+    private final BookingClient bookingClient;
+    private final ShowtimeClient showtimeClient;
 
     @Override
     public void save(MovieDto movieDto) {
@@ -25,7 +29,8 @@ public class MovieService implements MovieInf {
 
     @Override
     public void deleteById(long Id) {
-        repository.deleteById(Id);
+
+            repository.deleteById(Id);
     }
 
     @Override
@@ -38,4 +43,22 @@ public class MovieService implements MovieInf {
 
         return repository.findById(Id);
     }
+
+    @Override
+    public boolean ValidateMovie(long Id) {
+        boolean booking = (boolean) bookingClient.findByMovieId(Id).getData();
+        boolean showtime = (boolean) showtimeClient.findByMovieId(Id).getData();
+
+        if (booking && showtime) {
+            return false;
+        } else if (booking) {
+            return false;
+        } else if (showtime) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
 }

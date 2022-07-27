@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,4 +56,20 @@ public class ShowtimeService implements ShowtimeInf {
             return Optional.empty();
         }
     }
+
+    @Override
+    public boolean findByMovieId(long Id) {
+        List<Showtime> showtimes = repository.findAll();
+        boolean encontrado = false;
+
+        if (showtimes.size() > 0) {
+            encontrado = showtimes.stream().filter((item) -> {
+                return item.getMovies().stream().filter(mov -> mov.getId_Movie() == Id).findFirst().isPresent();
+            }).findFirst().isPresent();
+
+        }
+        return encontrado;
+    }
+
+
 }

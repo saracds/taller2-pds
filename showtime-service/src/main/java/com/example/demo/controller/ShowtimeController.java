@@ -49,6 +49,16 @@ public class ShowtimeController {
         }else {
             return build.success(showtime);
         }
+    }
+    @GetMapping("/movie/{movieId}")
+    public Response findByMovieId(@PathVariable("movieId") long Id) {
 
+        var showtime_movie = service.findByMovieId(Id);
+
+        if (!showtime_movie) {
+            return build.notFound(false);
+        }else {
+            return build.success(true);
+        }
     }
 }

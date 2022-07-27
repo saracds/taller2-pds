@@ -13,4 +13,8 @@ public class ShowtimeClientImplHystrixFallBack implements ShowtimeClient {
     private final ResponseBuild build;
 
 
+    @Override
+    public Response findByMovieId(Long userId) {
+        return build.notFound(false);
+    }
 }

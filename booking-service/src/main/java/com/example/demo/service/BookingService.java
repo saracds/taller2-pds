@@ -103,4 +103,18 @@ public class BookingService implements BookingInf {
          }
 
     }
+
+    @Override
+    public boolean findByMovieId(long Id) {
+        List<Booking> bookings = repository.findAll();
+        boolean encontrado = false;
+
+        if (bookings.size() > 0) {
+            encontrado = bookings.stream().filter((item) -> {
+                return item.getMovies().stream().filter(mov -> mov.getId_Movie() == Id).findFirst().isPresent();
+            }).findFirst().isPresent();
+
+        }
+        return encontrado;
+    }
 }
