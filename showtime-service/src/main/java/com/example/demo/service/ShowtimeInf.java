@@ -13,6 +13,8 @@ public interface ShowtimeInf {
 
     void save (ShowtimeDto showtimeDto);
 
+    void update (Optional<Showtime> showtime);
+
     Optional<Showtime> findById(long Id);
 
     boolean findByMovieId (long Id);

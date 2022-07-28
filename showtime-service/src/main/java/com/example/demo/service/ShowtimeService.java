@@ -37,6 +37,13 @@ public class ShowtimeService implements ShowtimeInf {
     }
 
     @Override
+    public void update(Optional<Showtime> showtime) {
+        ModelMapper modelMapper = new ModelMapper();
+        Showtime showtime1 = modelMapper.map(showtime, Showtime.class);
+        repository.save(showtime1);
+    }
+
+    @Override
     public Optional<Showtime> findById(long Id) {
 
         Optional<Showtime> showtime = repository.findById(Id);
